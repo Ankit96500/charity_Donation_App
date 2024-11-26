@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Charity Donation Platform</title>
+   <link rel="stylesheet" href="../css/custom.css">
+   
+  </head>
+  <body>
+ 
+    <h1>Charity Donation Platform</h1>
+    <h2> user Signup Page</h2>
+      <!-- error display -->
+    <div id="custom-alert" style="display: none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin: 15px 0;"></div>
+
+    <form id="signup-form">
+
+      <input type="text" id="name" placeholder="Username" required />
+      
+      <sub id="error"></sub>
+      <input type="email" id="email" placeholder="Email" required />
+      
+      <input type="password" id="password" placeholder="password" required />
+      <button type="submit" id="postsignup">Create User</button>
+    </form>
+
+    <div>
+      <p id="login-page"><a href="../account/customerLogin.html">Already User? Login Page</a></p>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/account/customerSignup.js"></script>
+  </body>
+</html>

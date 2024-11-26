@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Book-Appointment</title>
+    <!-- css file -->
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+    <!-- navbar -->
+
+    <div class="navbar-container">
+        <div class="navbar">
+            <!-- Logo -->
+            <a href="#" class="logo">Salon Book-Appointment</a>
+    
+            <!-- Navbar Links -->
+            <ul>
+                <li><a href="../home/home.html">Home</a></li>
+                <li><a href="#" id="donationHistory" style="display: none;"></a></li>
+            </ul>
+    
+            <!-- Displaying the username -->
+            <div class="user-info">
+                <span class="username">Hi, <strong id="username"></strong></span>
+            </div>
+    
+            <!-- LOG OUT Button -->
+            <button class="btn" id="logout">Logout</button>
+        </div>
+    </div>
+    
+ <!-- error display -->
+ <div id="custom-alert" style="display: none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin: 15px 0;"></div>
+
+
+<!-- Search Bar by deault none -->
+<div class="search-bar-container" style="display: none;" id="searchBarContainer">
+    <form class="search-bar" id="searchForm">
+        <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Type to search..." 
+            autocomplete="off" />
+        <button type="submit">Search</button>
+    </form>
+    <div id="searchResults" class="search-results"></div>
+</div>
+
+      <!-- Add charity-->
+<div class="add-charity-container" id="addCharityFormContainer" style="display: none;">
+    <form id="addCharityForm">
+        <!-- charity Name -->
+        <div class="form-group">
+            <input 
+                type="text" 
+                id="addCharityInput" 
+                placeholder="Charity Name..." 
+                autocomplete="off" 
+                required />
+        </div>
+
+        <!-- Picture -->
+        <div class="form-group">
+            <label for="addCharityPicture">Upload Picture:</label>
+            <input 
+                type="url" 
+                id="addCharityPicture" 
+                accept="image/*" 
+                required />
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+            <input 
+                type="text" 
+                id="addCharityLocation" 
+                placeholder="Location..." 
+                autocomplete="off" 
+                required />
+        </div>
+
+
+        <!-- doantion -->
+        <div class="form-group">
+            <input 
+                type="number" 
+                id="addCharityDonation" 
+                placeholder="donation price.." 
+                min="0"
+                 
+                required />
+        </div>
+       
+        <!-- goal -->
+        <div class="form-group">
+            <!-- <input 
+                type="textarea" 
+                id="addCharityGoal" 
+                placeholder="describe the goal" 
+                min="0" 
+                step="0.01" 
+                required /> -->
+                <textarea name="charitygoal" cols="20" rows="3" id="addCharityGoal" required></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Add Service</button>
+    </form>
+</div>
+
+
+<!-- Services List -->
+<div id="servicesList" class="services-list">
+    <h3>Charities explore-campaigns</h3>
+    <ul id="services"  class="card-container">
+        <!-- Dynamically populated cards will be inserted here -->
+    </ul>
+</div>
+
+
+    
+      
+<div class="out-ribbon">
+    <span class="ribbon" id="ribbon" style="display: none;">
+        Congratulation You Have booked the Appointment !!
+    </span> <!-- Add this span for the ribbon -->
+</div>
+
+
+     
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/home.js"></script>
+</body>
+</html> 

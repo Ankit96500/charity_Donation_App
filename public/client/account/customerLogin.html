@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Charity Donation Platform</title>
+   <link rel="stylesheet" href="../css/custom.css">
+    
+  </head>
+  <body>
+ 
+    <h1>Charity Donation Platform</h1>
+    <h2>User Login Page</h2>
+     <!-- error display -->
+      <div id="custom-alert" style="display: none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin: 15px 0;"></div>
+
+    <form id="login-form">
+      
+  
+      <input type="email" id="email" placeholder="Email" required />
+      
+      <input type="password" id="password" placeholder="password" required />
+      <button type="submit" id="postlogin">Login User</button>
+
+  
+    </form>
+
+    <div>
+      <p id="log-page"><a href="../account/customerSignup.html">Signup New User</a></p>
+    </div>
+    <!-- redirect me business login page -->
+    <div>
+      <p id=""><a href="../account/businessUserLogin.html">Business Login</a></p>
+    </div>
+    <!-- axios link -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/account/customerLogin.js"></script>
+  </body>
+</html>

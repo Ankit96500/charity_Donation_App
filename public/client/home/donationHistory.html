@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book-Appointment</title>
+    <!-- css file -->
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+    <!-- navbar -->
+
+    <div class="navbar-container">
+        <div class="navbar">
+            <!-- Logo -->
+            <a href="#" class="logo">Salon Book-Appointment</a>
+    
+            <!-- Navbar Links -->
+            <ul>
+                <li><a href="../home/home.html">Home</a></li>
+                <li><a href="#" id="donationHistory">Donation History</a></li>
+            </ul>
+    
+            <!-- Displaying the username -->
+            <div class="user-info">
+                <span class="username">Hi, <strong id="username"></strong></span>
+            </div>
+    
+            <!-- LOG OUT Button -->
+            <button class="btn" id="logout">Logout</button>
+        </div>
+    </div>
+    
+    <!-- error display -->
+    <div id="custom-alert" style="display: none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin: 15px 0;"></div>
+
+    <div class="donation-history-container" style="align-items: center; padding: 30px;">
+        <h1>Donation History...</h1>
+    </div>
+
+    
+
+     
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/donationHistory.js"></script>
+</body>
+</html> 
