@@ -39,11 +39,11 @@ import Registration from "./models/RegistrationM.js";
 
 // USER <---> Registration
 User.hasMany(Registration,{foreignKey:"userID",as:"registertb",onDelete:"CASCADE"});
-Registration.belongsTo(Registration,{foreignKey:"userID" ,as:"usertb"})
+Registration.belongsTo(User,{foreignKey:"userID" ,as:"usertb"})
 
 // // CHARITY <---> Registration
-// Charity.hasMany(Registration,{foreignKey:"service_ID",as:"registertb",onDelete:"CASCADE"});
-// Registration.belongsTo(Charity,{foreignKey:"service_ID",as:"servicetb"});
+Charity.hasMany(Registration,{foreignKey:"charity_ID",as:"registertb",onDelete:"CASCADE"});
+Registration.belongsTo(Charity,{foreignKey:"charity_ID",as:"charitytb"});
 
 // BUSER <----> CHARITY
 bUser.hasMany(Charity,{foreignKey:"bUser_ID",as:"charitytb",onDelete:"CASCADE"});
@@ -58,7 +58,7 @@ Orders.belongsTo(User,{foreignKey:"userID",as:"usertb",});
 
 // port listening
 sequelize.sync()
-// Charity.sync({alter:true})
+// Registration.sync({alter:true})
 // .sync({alter:true})
 .then(()=>{
   app.listen(PORT,()=>{

@@ -94,7 +94,7 @@ function createServiceCard(data) {
    
     // add person
     const founderEmail = document.createElement('p');
-    founderEmail.textContent =`Founder: ${ data.email}`;
+    founderEmail.textContent =`${ data.email}`;
     cardContent.appendChild(founderEmail);
 
     // Add location
@@ -172,6 +172,8 @@ buyServiceBtn.addEventListener("click", async (e) => {
       
        // if payement failed..
       rzp1.on("payment.failed", async function (params) {
+        console.log('payemd faild called',params);
+        
          try {
            await axios.post( `${API_URL}/user/service-transcation-failed`,
                { order_id: options.order_id , charity_id:charity_id,},{ headers: { Authorization: token } })

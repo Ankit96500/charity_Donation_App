@@ -22,9 +22,8 @@ export async function postSignupUser(req, res){
       email: email,
     });
 
-    res
-    .status(201)
-    .json(CreateResponse("success","user Signup Successfully",data))
+    res.status(201).json(CreateResponse("success","user Signup Successfully",data));
+    return;
   } catch (error) {  
     if (error instanceof sequelize.UniqueConstraintError) {
       res.status(400).json(CreateResponse("failed","error occured",null,'Email Must Be Unique'));
@@ -63,9 +62,11 @@ export async function postLoginUser(req, res){
       JWT.sign({ userID: user.id, name: user.name },process.env.JWT_SECRET_KEY || 'not exist',(err,token) => {
         if (err) {
           res.status(500).json(CreateResponse("failed","error occured",null,'token not generated'));
+          return;
+        }else{
+          res.status(200).json(CreateResponse("success","toekn genration done",{token,check:"user"}));
+          return;
         }
-        
-        res.status(200).json(CreateResponse("success","toekn genration done",{token,check:"user"}));
       }
     );
   } catch (error) {

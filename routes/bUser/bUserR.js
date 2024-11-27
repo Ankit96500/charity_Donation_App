@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 import { postSignupUser ,postLoginUser} from '../../controllers/bUser/accountC.js';
-import {getAllBUserCharities,createCharityPost} from "../../controllers/bUser/charityC.js";
+import {getAllBUserCharities,createUpdateCharityPost,editUserGet,editUserUpdate,editCharity} from "../../controllers/bUser/charityC.js";
 
 import {bUserAuthorized} from "../../middleware/bUserAuthorize.js";
 
@@ -17,8 +17,14 @@ router.post('/login-user', postLoginUser);
 // get all business user charity
 router.get('/get-dt',bUserAuthorized,getAllBUserCharities);
 
+router.get('/edit-charity-dt',bUserAuthorized,editCharity);
+
 // create charity business user:
-router.post('/create-charity',bUserAuthorized,createCharityPost);
+router.post('/create-update-charity',bUserAuthorized,createUpdateCharityPost);
+
+router.get('/edit-user',bUserAuthorized,editUserGet);
+
+router.put('/edit-user-update',bUserAuthorized,editUserUpdate);
 
 
 

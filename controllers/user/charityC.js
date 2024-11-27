@@ -1,27 +1,32 @@
 import User from "../../models/userM.js";
 import bUser from "../../models/businessUserM.js";
-import {CreateResponse} from "../../utils/customFun.js";
+import {CreateResponse,getS3ObjectUrl,generateFileName} from "../../utils/customFun.js";
 import Charity from "../../models/charityM.js";
 import Razorpay from "razorpay";
 import Order from "../../models/ordersM.js";
 import dotenv from "dotenv";
 import {mailProtocolMiddelware} from "../../utils/nodemailer.js";
-import { where } from "sequelize";
+import { where ,Op} from "sequelize";
 import Registration from "../../models/RegistrationM.js";
+import { uploadFile} from "../../utils/aws.js";
 
 
 dotenv.config();
 
 
 export const getAllCharities = async (req,res)=>{
+  if (!req.user) {
+    res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
+    return;
+  }
     try {
         const dt = await Charity.findAll();
-        console.log('thi is call-->');
-
+   
         const username = req.user.name
         const data = {dt,username}
 
         res.status(201).json(CreateResponse("success","data fetched",data));
+        return;
     } catch (error) {
         res.status(400).json(CreateResponse("failed","error occured",null,'charity data not fetched'));
     }
@@ -29,6 +34,10 @@ export const getAllCharities = async (req,res)=>{
 
 
 export const getCharityData = async (req,res)=>{
+  if (!req.user) {
+    res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
+    return;
+  }
     const charity_id = req.query.charity_id;
     
     try {
@@ -59,6 +68,7 @@ export const getCharityData = async (req,res)=>{
             const data = {formattedData,username}
         
             res.status(201).json(CreateResponse("success","data fetched",data));
+            return;
           }else{
  
             const username = req.user.name
@@ -66,6 +76,7 @@ export const getCharityData = async (req,res)=>{
             // console.log('charity data',dt);
             
             res.status(201).json(CreateResponse("success","data fetched",data));
+            return;
           }
     } catch (error) {
         res.status(400).json(CreateResponse("failed","error occured",null,'charity data not fetched'));
@@ -74,22 +85,143 @@ export const getCharityData = async (req,res)=>{
 
 
 export const getDonationHistory = async (req,res)=>{
-  console.log('iam a calling.. doantion histiry');
+  // console.log('iam a calling.. doantion histiry');
+  if (!req.user) {
+    res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
+    return;
+  }
   
-  try {
-    const dt = await Registration.findAll();
-    console.log('thi is call-->');
-
+  try { 
+    const dt = await Registration.findAll({
+      where:{user_ID:req.user.id},
+      attributes:['status','createdAt'],
+      include:{
+        model:Charity,
+        as:"charitytb",
+        attributes:['name','donation'],
+        include:{
+          model:bUser,
+          as:"busertb",
+          attributes:['organization_name','name']
+        }
+      }
+    });
+    let formattedData;
     const username = req.user.name
-    const data = {dt,username}
-    console.log('data:',dt);
+
+    if (!dt) {
+      formattedData = dt;
+      const data = {formattedData,username}
+      // console.log('data:',dt);
+      
+      res.status(201).json(CreateResponse("success","doantion history data fetched",data));
+      return;
+    } else {
+      formattedData = dt.map((data,ind)=>{
+       return {
+         s_no : ind+1,
+         payment_status: data.status,
+         organization : data.charitytb.busertb?.organization_name || 'na',
+         person: data.charitytb.busertb?.name || "na",
+         charity_name: data.charitytb?.name || "na",
+         donation:data.charitytb?.donation |"na",
+         created: new Date(data.createdAt).toLocaleDateString()
+       }
+ 
+     });
+      
+     const data = {formattedData,username}
+     // console.log('data:',dt);
+     
+     res.status(201).json(CreateResponse("success","doantion history data fetched",data));
+     return;
+    }
     
-    res.status(201).json(CreateResponse("success","doantion history data fetched",data));
 } catch (error) {
     res.status(400).json(CreateResponse("failed","error occured",null,'doantion history data not fetched'));
 }
 }
 
+
+export const getAllSearchData = async (req,res)=>{
+  if (!req.user) {
+    res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
+    return;
+  }
+  const query = req.query.search
+  try {
+    const data = await Charity.findAll({
+      where:{
+        [Op.or]:{
+          name:{[Op.like]:`%${query}%`},
+          location:{[Op.like]:`%${query}%`},
+          goal:{[Op.like]:`%${query}%`},
+        }
+      }
+    });
+    res.status(201).json(CreateResponse("success","data fetched",data));
+    return;
+} catch (error) {
+    res.status(400).json(CreateResponse("failed","error occured",null,'charity data not fetched'));
+}
+}
+
+
+export const downloadReceipt = async (req,res)=>{
+    if (!req.user) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }  
+  try {
+    const dt = await Registration.findAll({
+      where:{user_ID:req.user.id},
+      attributes:['status','createdAt'],
+      include:{
+        model:Charity,
+        as:"charitytb",
+        attributes:['name','donation'],
+        include:{
+          model:bUser,
+          as:"busertb",
+          attributes:['organization_name','name']
+        }
+      }
+    });
+    let formattedData;
+    if (!dt) {
+      formattedData = dt;
+    } else {
+      formattedData = dt.map((data,ind)=>{
+       return {
+         s_no : ind+1,
+         payment_status: data.status,
+         organization : data.charitytb.busertb?.organization_name || 'na',
+         person: data.charitytb.busertb?.name || "na",
+         charity_name: data.charitytb?.name || "na",
+         donation:data.charitytb?.donation |"na",
+         created: new Date(data.createdAt).toLocaleDateString()
+       }
+ 
+     });
+      
+    }
+      if (formattedData.length === 0) {
+        res.status(201).json(CreateResponse(false,"error occured",null,"sorry there is no history available:"));
+        return;
+      }else{
+        const jsonFormattedData = JSON.stringify(formattedData);
+        const filename = generateFileName();
+     
+        await uploadFile(jsonFormattedData,filename);
+        const data = getS3ObjectUrl(process.env.AWS_BUCKET,process.env.AWS_REGION,filename)
+    
+      res.status(201).json(CreateResponse("success","data fetched",data));
+      return;
+      }
+} catch (error) {
+    res.status(400).json(CreateResponse("failed","error occured",null,'download report data not fetched'));
+}
+}
 
 
 export const buyService = async (req, res) => {
@@ -112,7 +244,8 @@ export const buyService = async (req, res) => {
           if (err) {
             console.log('error hit->',err);
             
-            return res.status(500).json(CreateResponse("failed","error occured",null,'Error Creating Order'));
+            res.status(500).json(CreateResponse("failed","error occured",null,'Error Creating Order'));
+            return;
           }
           if (order) {
             // save this order in the database
@@ -126,6 +259,7 @@ export const buyService = async (req, res) => {
            
               const data = { order: order, key_id: process.env.KEY_ID }
               res.status(201).json(CreateResponse("success","process done",data));
+              return;
             } catch (error) {
                 console.log('eror insidfe the if:',error);                
               res.status(500).json(CreateResponse("failed","error occured",null,'saving order to data base'));
@@ -141,15 +275,17 @@ export const buyService = async (req, res) => {
   };
 
 export const updateBuyServiceStatus = async (req, res) => {
+  if (!req.user) {
+    res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
+    return;
+  }
     try {
       const { order_id, payment_id ,charity_id} = req.body;
   
       // Get order object
       const orderObj = await Order.findOne({ where: { orderId: order_id } });
       if (!orderObj) {
-          res
-          .status(404)
-          .json(CreateResponse("failed","error occured",null,'order not found'));
+          res.status(404).json(CreateResponse("failed","error occured",null,'order not found'));
           return;
       }
       // Update order with paymentId and status
@@ -158,12 +294,6 @@ export const updateBuyServiceStatus = async (req, res) => {
         status: "SUCCESSFUL",
       });
   
-  
-      // Update user to become premium user
-      if (!req.user) {
-        res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
-        return;
-      }
       const user = await User.findByPk(req.user.id);
       if (!user) {
         res.status(404).json(CreateResponse("failed","error occured",null,'user not found'));
@@ -188,24 +318,23 @@ export const updateBuyServiceStatus = async (req, res) => {
       res.status(201).json(CreateResponse("success","transcation successful"));
       return;
     } catch (error) {
-        res
-        .status(500)
-        .json(CreateResponse("failed","error occured",null,'internal server error'));
+        res.status(500).json(CreateResponse("failed","error occured",null,'internal server error'));
     }
   };
   
 export const transactionFailed = async (req, res) => {
- 
-  
+    console.log('i am  reansaction failed called..');
+    if (!req.user) {
+      res.status(401).json(CreateResponse("failed","error occured",null,'UnAuthorized'));
+      return;
+    }
     try {
       const { order_id ,charity_id} = req.body;
   
       // Get order object
       const orderObj = await Order.findOne({ where: { orderId: order_id } });
       if (!orderObj) {
-        res
-          .status(404)
-          .json(CreateResponse("failed","error occured",null,'order not found'));
+        res.status(404).json(CreateResponse("failed","error occured",null,'order not found'));
         return;
         }
       // Update order with paymentId and status
@@ -236,9 +365,7 @@ export const transactionFailed = async (req, res) => {
       return;
     } catch (error) {
       // console.error("Error in TransactionFailed:", error);
-      res
-        .status(500)
-        .json(CreateResponse("failed","error occured",null,'internal server error'));
+      res.status(500).json(CreateResponse("failed","error occured",null,'internal server error'));
     }
   };
   

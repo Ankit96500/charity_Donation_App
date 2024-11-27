@@ -16,7 +16,7 @@ Charity.init({
         picture:{type:DataTypes.STRING},
         location:{type:DataTypes.STRING},
         donation:{type:DataTypes.STRING},
-        goal:{type:DataTypes.STRING},
+        goal:{type:DataTypes.TEXT},
         bUser_ID:{
             type:DataTypes.INTEGER,
             references:{

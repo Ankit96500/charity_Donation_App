@@ -6,6 +6,9 @@
     <title>Book-Appointment</title>
     <!-- css file -->
     <link rel="stylesheet" href="../css/home.css">
+    <!-- Link to FontAwesome for the download icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <!-- navbar -->
@@ -13,7 +16,7 @@
     <div class="navbar-container">
         <div class="navbar">
             <!-- Logo -->
-            <a href="#" class="logo">Salon Book-Appointment</a>
+            <a href="#" class="logo">Charity Donation Platform</a>
     
             <!-- Navbar Links -->
             <ul>
@@ -36,10 +39,34 @@
 
     <div class="donation-history-container" style="align-items: center; padding: 30px;">
         <h1>Donation History...</h1>
+        <hr>
     </div>
 
+<div class="charity-table">
+    <table>
+        <thead>
+            <tr>
+            <th>S. No</th>
+            <th>Payment Status</th>
+            <th>Organization</th>
+            <th>Person</th>
+            <th>Charity Name</th>
+            <th>Donation (₹)</th>
+            <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="charity-table-body">
+            <!-- Rows will be dynamically inserted here -->
+        </tbody>
+        </table>
     
-
+</div>
+    
+<div class="button-container" style="padding: 10px;">
+    <button id="downloadBtn" class="download-button">
+        <i class="fas fa-download"></i> Download File
+    </button>
+</div>
      
     <!-- Axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
    async function SignupUser(UserData) {
         try {
             await axios.post(`${API_URL}/bUser/signup-user`,UserData) 
-            alert('User Has Created Successfully ')
+            window.location.href = "../account/businessUserLogin.html"
         } catch (error) {
             displayError(error);  // Example error message
             function displayError (error) {

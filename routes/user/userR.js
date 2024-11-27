@@ -3,7 +3,7 @@ import { Router } from 'express';
 
 import { postSignupUser ,postLoginUser} from '../../controllers/user/accountC.js';
 
-import {getAllCharities,getCharityData,buyService,updateBuyServiceStatus,transactionFailed,getDonationHistory} from '../../controllers/user/charityC.js'
+import {getAllCharities,getCharityData,buyService,updateBuyServiceStatus,transactionFailed,getDonationHistory,downloadReceipt,getAllSearchData} from '../../controllers/user/charityC.js'
 import { UserAuthorized } from '../../middleware/userAuthorize.js';
 
 
@@ -17,9 +17,15 @@ router.post('/login-user', postLoginUser);
 
 router.get('/get-dt',UserAuthorized,getAllCharities);
 
+// get all serach data
+router.get('/get-search-data',UserAuthorized,getAllSearchData);
+
 router.get('/get-charity',UserAuthorized,getCharityData);
 
 router.get('/get-donation-history',UserAuthorized,getDonationHistory);
+
+router.get('/download-receipt',UserAuthorized,downloadReceipt);
+
 
 
 // razopay intergrationa setup ::

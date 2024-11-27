@@ -64,7 +64,7 @@ export async function postLoginUser(req, res){
         if (err) {
           res.status(500).json(CreateResponse("failed","error occured",null,'token not generated'));
         }
-        res.status(200).json(CreateResponse("success","toekn genration done",{token,check:'buser'}));
+        res.status(200).json(CreateResponse("success","toekn genration done",{token,check:'buser',buser_id:buser.id}));
       }
     );
   } catch (error) {

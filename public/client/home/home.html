@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salon Book-Appointment</title>
+    <title>Charity Donation Platform</title>
     <!-- css file -->
     <link rel="stylesheet" href="../css/home.css">
 </head>
@@ -13,12 +13,13 @@
     <div class="navbar-container">
         <div class="navbar">
             <!-- Logo -->
-            <a href="#" class="logo">Salon Book-Appointment</a>
+            <a href="#" class="logo">Charity Donation Platform</a>
     
             <!-- Navbar Links -->
             <ul>
                 <li><a href="../home/home.html">Home</a></li>
                 <li><a href="#" id="donationHistory" style="display: none;"></a></li>
+                <li><a href="#" id="editUser" style="display: none;"></a></li>
             </ul>
     
             <!-- Displaying the username -->
@@ -34,6 +35,7 @@
  <!-- error display -->
  <div id="custom-alert" style="display: none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin: 15px 0;"></div>
 
+<br><br><hr>
 
 <!-- Search Bar by deault none -->
 <div class="search-bar-container" style="display: none;" id="searchBarContainer">
@@ -41,7 +43,7 @@
         <input 
             type="text" 
             id="searchInput" 
-            placeholder="Type to search..." 
+            placeholder="Type to search by charity name, location, goal.." 
             autocomplete="off" />
         <button type="submit">Search</button>
     </form>
@@ -95,23 +97,16 @@
        
         <!-- goal -->
         <div class="form-group">
-            <!-- <input 
-                type="textarea" 
-                id="addCharityGoal" 
-                placeholder="describe the goal" 
-                min="0" 
-                step="0.01" 
-                required /> -->
-                <textarea name="charitygoal" cols="20" rows="3" id="addCharityGoal" required></textarea>
+            <textarea name="charitygoal" cols="20" rows="3" id="addCharityGoal" required></textarea>
         </div>
-
+        <input type="hidden" id="ch_id">
         <!-- Submit Button -->
-        <button type="submit">Add Service</button>
+        <button type="submit">Add Charity</button>
     </form>
 </div>
 
 
-<!-- Services List -->
+<!-- charity List -->
 <div id="servicesList" class="services-list">
     <h3>Charities explore-campaigns</h3>
     <ul id="services"  class="card-container">
@@ -121,12 +116,6 @@
 
 
     
-      
-<div class="out-ribbon">
-    <span class="ribbon" id="ribbon" style="display: none;">
-        Congratulation You Have booked the Appointment !!
-    </span> <!-- Add this span for the ribbon -->
-</div>
 
 
      

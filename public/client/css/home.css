@@ -198,47 +198,7 @@ h2 {
 }
 
 
-/* ribbon */
-#ribbon {
-    position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #e74c3c; /* Ribbon background color */
-    color: white; /* Text color */
-    font-weight: bold;
-    font-size: 16px;
-    text-transform: uppercase;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  #ribbon:before, #ribbon:after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    border-style: solid;
-    border-width: 10px;
-    border-color: #e74c3c transparent transparent transparent;
-  }
-  
-  #ribbon:before {
-    left: 0;
-    transform: translateX(-50%);
-  }
-  
-  #ribbon:after {
-    right: 0;
-    transform: translateX(50%);
-  }
-  
-  /* Optional - Add some extra styling for the container */
-  .out-ribbon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1cm;
-    /* height: 100vh; */
-  }
-  
+
     
    .rzp-button1 {
       background-color: #055745;
@@ -335,112 +295,79 @@ h2 {
 .search-results ul li a:hover {
     color: #055745;
 }
+/* add charity css */
 
-/* Form Group */
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.form-group input,
-.form-group select {
-    width: 50%;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #2d2e2e;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.form-group label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-    color: #2d2e2e;
-}
 /* Add Charity Container */
 .add-charity-container {
-    width: 50%; /* Half of the screen width */
-    padding: 25px;
-    background-color: #f9f9f9; /* Optional background color */
-    border: 1px solid #ddd; /* Optional border */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
-    
-    /* Center the container */
-    /* position: fixed; Fix position on the viewport */
-    top: 50%; /* Vertically centered */
-    left: 50%; /* Horizontally centered */
-    transform: translate(-50%, -50%); /* Offset by 50% of its width and height */
-    
-    z-index: 1000; /* Ensure it appears above other content */
+    position: relative; /* Ensure it remains positioned relative to its section */
+    margin: 50px auto; /* Center horizontally with margin */
+    width: 100%;
+    max-width: 500px; /* Restrict maximum width for better aesthetics */
+    padding: 20px;
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Smooth corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Form group styling for the add-charity container */
+/* Form Group */
 .add-charity-container .form-group {
-    display: flex;
+    margin-bottom: 15px; /* Space between fields */
+    width: 100%;
+    display: block;
     flex-direction: column;
-    margin-bottom: 15px;
 }
 
-/* Inputs, selects, and buttons in the add-charity container */
-.add-charity-container input[type="text"],
-.add-charity-container input[type="file"],
-.add-charity-container input[type="number"],
-.add-charity-container select,
-.add-charity-container button {
-    width: 90%; /* Adjust width to fit container */
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* Ensure consistent sizing */
+/* Input, Textarea, and Select Fields */
+.add-charity-container .form-group input,
+.add-charity-container .form-group textarea,
+.add-charity-container .form-group button {
+    width: 100%; /* Full width */
+    padding: 8px; /* Comfortable padding */
+    font-size: 14px; /* Consistent font size */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded edges */
+    box-sizing: border-box; /* Prevent padding from affecting width */
 }
 
-/* Focus styles for inputs and selects */
-.add-charity-container input:focus,
-.add-charity-container select:focus {
+/* Focus Styles for Inputs */
+.add-charity-container .form-group input:focus,
+.add-charity-container .form-group textarea:focus {
     outline: none;
-    border-color: #2d2e2e;
-    box-shadow: 0 0 5px rgba(40, 167, 140, 0.5);
+    border-color: #007bff; /* Highlighted border on focus */
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5); /* Subtle glow */
 }
 
-/* Button styles */
+/* Button Styles */
 .add-charity-container button {
-    background-color: #2d2e2e;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #4f6c8b; /* Blue background */
+    color: white; /* White text */
+    border:#17cfd5; /* Remove default border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    font-size: 30px;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded edges */
 }
 
 .add-charity-container button:hover {
-    background-color: #055745;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
-/* Responsive styles for the add-charity container */
-@media (max-width: 768px) {
+/* Responsive Adjustments */
+@media (max-width: 500px) {
     .add-charity-container {
-        width: 90%; /* Adjust width for smaller screens */
+        padding: 15px; /* Reduce padding for smaller screens */
     }
 
-    .add-charity-container input[type="text"],
-    .add-charity-container input[type="file"],
-    .add-charity-container input[type="number"],
-    .add-charity-container select,
     .add-charity-container button {
-        width: 100%; /* Full width for smaller screens */
+        font-size: 14px; /* Slightly smaller text */
     }
 }
+
+
 
 /* Services List Container */
 .services-list {
@@ -520,5 +447,40 @@ h2 {
     font-size: 14px;
 }
 
+/*  donation history tabl */
 
-
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: #007BFF;
+    color: #fff;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #e0f7fa;
+  }
+  .status-true {
+    color: green;
+    font-weight: bold;
+  }
+  .status-false {
+    color: red;
+    font-weight: bold;
+  }

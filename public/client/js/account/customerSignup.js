@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
    async function SignupUser(UserData) {
         try {
             await axios.post(`${API_URL}/user/signup-user`,UserData) 
-            alert('User Has Created Successfully ')
+            window.location.href = "../account/customerLogin.html"
         } catch (error) {
             displayError(error);  // Example error message
             function displayError (error) {
