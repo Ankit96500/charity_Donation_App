@@ -1,6 +1,6 @@
 
 // console.log("JavaScript file is connected!");
-const API_URL = `http://localhost:8000`  
+const API_URL = `http://13.203.0.136:8000`  
 document.getElementById('login-form').addEventListener('submit',handleFormLogin);
 
 // handel form submission login

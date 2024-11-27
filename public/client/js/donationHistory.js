@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:8000";
+const API_URL = "http://13.203.0.136:8000";
 
 
 // load localstorage creds:

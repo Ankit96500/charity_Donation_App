@@ -1,6 +1,6 @@
 console.log("JavaScript file is connected!");
 // booking appointment app hit create,get api
-const API_URL = `http://localhost:8000`  
+const API_URL = `http://13.203.0.136:8000`  
 document.addEventListener('DOMContentLoaded', () => {
 
     
